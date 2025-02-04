@@ -1,6 +1,11 @@
+#pragma once
+
 #include <stdint.h>
 #include <stm32f0xx_hal.h>
 #include <stm32f0xx_hal_gpio.h>
+
+#define My_HAL_RCC_GPIOA_CLK_ENABLE() SET_BIT(RCC->AHBENR, RCC_AHBENR_GPIOAEN)
+#define My_HAL_RCC_GPIOC_CLK_ENABLE() SET_BIT(RCC->AHBENR, RCC_AHBENR_GPIOCEN)
 
 void My_HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init);
 void My_HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin);
