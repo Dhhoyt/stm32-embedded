@@ -2,6 +2,8 @@
 #include <stm32f0xx_hal.h>
 #include <stm32f0xx_hal_gpio.h>
 
+#include "hal_gpio.h"
+
 void My_HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 {
     uint32_t pins = GPIO_Init->Pin;
