@@ -25,6 +25,7 @@ int lab1_main(void) {
         GPIO_PULLDOWN,
         GPIO_SPEED_FREQ_LOW
     };
+    
     My_HAL_GPIO_Init(GPIOA, &initStr);
     uint32_t debouncer = 0;
     while (1) {
