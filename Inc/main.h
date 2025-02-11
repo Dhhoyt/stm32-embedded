@@ -9,3 +9,11 @@ int lab4_main(void);
 int lab5_main(void);
 int lab6_main(void);
 int lab7_main(void);
+
+enum EdgeType {
+    RISING,
+    FALLING,
+    BOTH
+};
+
+void unmask_exti(uint16_t index, enum EdgeType edge);

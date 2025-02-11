@@ -21,6 +21,8 @@
 #include <stm32f0xx_hal.h>
 #include <stm32f0xx_it.h>
 
+#include "hal_gpio.h"
+
 /******************************************************************************/
 /*            Cortex-M0 Processor Exceptions Handlers                         */
 /******************************************************************************/
@@ -65,6 +67,7 @@ void PendSV_Handler(void)
 {
 }
 
+
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
@@ -72,7 +75,13 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-    HAL_IncTick();
+  HAL_IncTick();
+  static int count = 0;
+  count += 1;
+  if (count >= 200) {
+    count = 0;
+    My_HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
+  }
 }
 
 /******************************************************************************/

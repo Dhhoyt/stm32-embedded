@@ -22,3 +22,17 @@ int main(void)
   #endif
 
 }
+
+void unmask_exti(uint16_t index, enum EdgeType edge) {
+  EXTI->EMR |= 1 << index;
+  if (edge == RISING) {
+    EXTI->RTSR |= 1 << index;
+    EXTI->FTSR &= ~(1 << index);
+  } else if (edge == FALLING) {
+    EXTI->RTSR &= ~(1 << index);
+    EXTI->FTSR |= 1 << index;
+  } else {
+    EXTI->RTSR |= 1 << index;
+    EXTI->FTSR |= 1 << index;
+  }
+}

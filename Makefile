@@ -1,4 +1,4 @@
-TARGET ?= LAB1
+TARGET ?= LAB2
 
 PREFIX = arm-none-eabi-
 CC = $(PREFIX)gcc
@@ -78,7 +78,6 @@ C_DEFS =  \
 -DUSE_HAL_DRIVER \
 -DSTM32F072xB \
 -D${TARGET}
-
 
 # AS includes
 AS_INCLUDES =
