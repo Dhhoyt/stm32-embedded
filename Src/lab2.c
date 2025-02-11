@@ -21,28 +21,29 @@ int lab2_main(void) {
         GPIO_PULLDOWN,
         GPIO_SPEED_FREQ_LOW
     };
+    
     My_HAL_GPIO_Init(GPIOA, &initStr);
 
     // Enable EXTI
-    assert_param(EXTI->IMR == 0x7F840000UL);
-    assert_param(EXTI->RTSR == 0x0UL);
-    assert_param(EXTI->FTSR == 0x0UL);
+    assert(EXTI->IMR == 0x7F840000UL);
+    assert(EXTI->RTSR == 0x0UL);
+    assert(EXTI->FTSR == 0x0UL);
     unmask_exti(0, RISING);
-    assert_param(EXTI->IMR == 0x7F840001UL);
-    assert_param(EXTI->RTSR == 0x1UL);
-    assert_param(EXTI->FTSR == 0x0UL);
+    assert(EXTI->IMR == 0x7F840001UL);
+    assert(EXTI->RTSR == 0x1UL);
+    assert(EXTI->FTSR == 0x0UL);
 
 
     // Route EXTI        
     My_HAL_RCC_SYSCFG_CLK_ENABLE();
 
-    assert_param(SYSCFG->EXTICR[0] == 0x0UL);
+    assert(SYSCFG->EXTICR[0] == 0x0UL);
     My_HAL_Route_EXTI(0, BANKA);
-    assert_param(SYSCFG->EXTICR[0] == 0x0UL);
+    assert(SYSCFG->EXTICR[0] == 0x0UL);
 
     NVIC_EnableIRQ(EXTI0_1_IRQn);
-    NVIC_SetPriority(EXTI0_1_IRQn, 1);
-
+    NVIC_SetPriority(EXTI0_1_IRQn, 3);
+    NVIC_SetPriority(SysTick_IRQn, 2);
 
     while (1) {
         HAL_Delay(400);
@@ -51,6 +52,8 @@ int lab2_main(void) {
 }
 
 void EXTI0_1_IRQHandler(void) {
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9 | GPIO_PIN_8);
+    for(int i = 0; i < 1000000; i++) {}
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9 | GPIO_PIN_8);
     EXTI->PR |= 1 << 0;
 }

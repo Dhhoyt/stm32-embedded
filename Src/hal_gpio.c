@@ -61,7 +61,7 @@ void My_HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 }
 
 void My_HAL_Route_EXTI(uint16_t id, enum GPIOBank bank) {
-    assert(bank < 16);
+    assert(bank < BANKF);
     volatile uint32_t* reg = &SYSCFG->EXTICR[id >> 2];
     uint8_t shift = (id % 4) << 2;
     *reg = (*reg & ~(0xF << shift)) | (bank << shift);
