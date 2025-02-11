@@ -77,6 +77,7 @@ AS_DEFS =
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
 -DSTM32F072xB \
+-DUSE_FULL_ASSERT \
 -D${TARGET}
 
 # AS includes

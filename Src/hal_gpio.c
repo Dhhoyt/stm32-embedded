@@ -1,8 +1,9 @@
+#include "hal_gpio.h"\
+
 #include <stdint.h>
 #include <stm32f0xx_hal.h>
 #include <stm32f0xx_hal_gpio.h>
-
-#include "hal_gpio.h"
+#include <assert.h>
 
 void My_HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 {
@@ -57,4 +58,11 @@ void My_HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
     uint32_t set = (current_value & GPIO_Pin) << 16;
     uint32_t reset = ~current_value & GPIO_Pin;
     GPIOx->BSRR = set | reset;
+}
+
+void My_HAL_Route_EXTI(uint16_t id, enum GPIOBank bank) {
+    assert(bank < 16);
+    volatile uint32_t* reg = &SYSCFG->EXTICR[id >> 2];
+    uint8_t shift = (id % 4) << 2;
+    *reg = (*reg & ~(0xF << shift)) | (bank << shift);
 }
